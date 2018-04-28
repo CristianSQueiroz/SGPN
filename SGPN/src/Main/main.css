@@ -1,0 +1,20 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+ -fx-background-color: blanchedalmond;
+}
+
+.root {
+ -fx-background-color: blanchedalmond;
+}
+
+.label {
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+}
+.checkbox {
+    -fx-font-size: 18px;
+}
+

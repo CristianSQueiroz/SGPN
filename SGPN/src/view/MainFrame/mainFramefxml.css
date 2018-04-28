@@ -1,0 +1,13 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+#mniOpen > .label{
+    -fx-graphic: url("media/open.png");
+}
+#mniOpen .accelerator-text{
+    -fx-graphic: none;
+}
