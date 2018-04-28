@@ -26,7 +26,7 @@ public class CadastroOSController implements Initializable {
     private Button limparCampos;
     
     @FXML
-    private AnchorPane osPane2;
+    private AnchorPane osPane;
     /**
      * Initializes the controller class.
      */
