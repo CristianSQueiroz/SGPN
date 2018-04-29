@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import Main.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import view.CadastroOS.CadastroOSController;
 import view.CadastroOS.CadastroOrdemDeServicoFXMLController;
 import view.propriedades.PropriedadesFXMLController;
 
@@ -36,7 +37,8 @@ public class MainFrameController {
 
     @FXML
     public void openCadastroOS() throws IOException {
-        CadastroOrdemDeServicoFXMLController.montaTelaCadastro();
+        Main.openWindow(CadastroOSController.class, "CadastroOS.fxml");
+        //CadastroOrdemDeServicoFXMLController.montaTelaCadastro();
     }
 
     @FXML
