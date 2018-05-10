@@ -28,7 +28,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javax.swing.SwingUtilities;
-import editordecampos.CampoDinamico;
+import SGPNmodel.CampoDinamico;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 

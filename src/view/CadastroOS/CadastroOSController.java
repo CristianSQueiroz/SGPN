@@ -8,7 +8,7 @@ package view.CadastroOS;
 import ClassesDeConexao.CampoDinamicoOSDB;
 import HashMap.CHashMap;
 import Main.ConstrutorTela;
-import editordecampos.CampoDinamico;
+import SGPNmodel.CampoDinamico;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;

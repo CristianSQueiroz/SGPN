@@ -7,7 +7,7 @@ package Main;
 
 import ClassesDeConexao.CampoDinamicoOSDB;
 import HashMap.CHashMap;
-import editordecampos.CampoDinamico;
+import SGPNmodel.CampoDinamico;
 import editordecampos.EditorDeCamposFXMLController;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -18,7 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import editordecampos.CampoDinamico;
+import SGPNmodel.CampoDinamico;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;

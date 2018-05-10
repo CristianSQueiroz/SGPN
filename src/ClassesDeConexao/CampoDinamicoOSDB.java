@@ -11,7 +11,7 @@ import Util.UtilSql;
 import Util.Utilidades;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import editordecampos.CampoDinamico;
+import SGPNmodel.CampoDinamico;
 import javax.swing.SwingUtilities;
 
 /**
