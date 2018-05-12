@@ -6,6 +6,7 @@
 package view.CadastroOS;
 
 import ClassesDeConexao.CampoDinamicoOSDB;
+import ClassesDeConexao.VendaDB;
 import HashMap.CHashMap;
 import Main.ConstrutorTela;
 import SGPNmodel.CampoDinamico;
@@ -114,6 +115,10 @@ public class CadastroOSController implements Initializable {
                 }
             }
         }
+        if (new VendaDB().cadastrarFicha(dBColumnValues)) {
+            limparCampos();
+        }
+
         System.out.println(dBColumnValues);
 
     }

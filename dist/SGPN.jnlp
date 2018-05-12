@@ -8,10 +8,10 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SGPN.jar" size="50310" download="eager" />
+    <jar href="SGPN.jar" size="49273" download="eager" />
     <jar href="lib\CSQClasses.jar" size="3351" download="eager" />
     <jar href="lib\CSQComponentes.jar" size="187821" download="eager" />
-    <jar href="lib\CSQUtilidades.jar" size="22260" download="eager" />
+    <jar href="lib\CSQUtilidades.jar" size="23540" download="eager" />
     <jar href="lib\EditorDeCampos.jar" size="38983" download="eager" />
     <jar href="lib\ExcelHandler.jar" size="39079" download="eager" />
     <jar href="lib\GerenciadorDeRelatorios.jar" size="18571" download="eager" />
