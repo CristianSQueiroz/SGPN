@@ -30,7 +30,7 @@
                         <MenuItem mnemonicParsing="false" text="Cadastro de produtos" />
                         <MenuItem mnemonicParsing="false" onAction="#openCadastroOS" text="Cadastro de OS" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Gestão de usuários" />
+                        <MenuItem mnemonicParsing="false" onAction="#openGerenciadorDeUsuarios" text="Gestão de usuários" />
                         <MenuItem mnemonicParsing="false" text="Gestão de produtos" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Controle de estoque" />

@@ -20,7 +20,7 @@ public class Usuario {
         this.dsSenha = dsSenha;
     }
     
-    public int getInt(){
+    public int getId(){
         return this.id;
     }
     

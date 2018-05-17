@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GerenciadorDeUsuarios.GerenciadorDeUsuariosFXMLController">
+    <stylesheets>
+        <URL value="@gerenciadordeusuariosfxml.css" />
+    </stylesheets>
+   <children>
+      <TabPane layoutX="119.0" layoutY="66.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Gerenciador de usuários">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="221.0" layoutY="29.0" prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <ScrollPane fx:id="scrollPaneForm" prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <Pane prefHeight="769.0" prefWidth="912.0">
+                                             <children>
+                                                <Label layoutX="14.0" layoutY="14.0" text="ID:" />
+                                                <Label layoutX="14.0" layoutY="38.0" text="Usuário:" />
+                                                <Label layoutX="15.0" layoutY="71.0" text="Senha:" />
+                                                <PasswordField fx:id="senhaPF" layoutX="63.0" layoutY="68.0" />
+                                                <TextField fx:id="idTF" layoutX="63.0" layoutY="10.0" />
+                                                <TextField fx:id="nmUsuarioTF" layoutX="63.0" layoutY="39.0" />
+                                             </children>
+                                          </Pane>
+                                       </content>
+                                    </ScrollPane>
+                                    <ScrollPane fx:id="scrollPaneTabela" prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <TableView fx:id="tableUsuario" prefHeight="769.0" prefWidth="912.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnIDUsuario" prefWidth="75.0" text="ID" />
+                                              <TableColumn fx:id="columnDsUsuario" prefWidth="75.0" text="Usuário" />
+                                            </columns>
+                                          </TableView>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </StackPane>
+                           </center>
+                           <right>
+                              <BorderPane prefHeight="771.0" prefWidth="89.0" BorderPane.alignment="CENTER">
+                                 <bottom>
+                                    <ToolBar orientation="VERTICAL" prefHeight="396.0" prefWidth="110.0" BorderPane.alignment="CENTER">
+                                      <items>
+                                          <Button fx:id="formTabelaBTN" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#trocarPanelBTN" prefWidth="100.0" text="Form/Tabela" />
+                                        <Button fx:id="novoBTN" mnemonicParsing="false" onAction="#novoBTN" prefWidth="100.0" text="Novo" />
+                                          <Button fx:id="editarBTN" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editarBTN" prefWidth="100.0" text="Editar" />
+                                          <Button fx:id="salvarBTN" layoutX="10.0" layoutY="39.0" mnemonicParsing="false" onAction="#salvarBTN" prefWidth="100.0" text="Salvar" />
+                                          <Button fx:id="excluirBTN" layoutX="10.0" layoutY="68.0" mnemonicParsing="false" onAction="#excluirBTN" prefWidth="100.0" text="Excluir" />
+                                      </items>
+                                    </ToolBar>
+                                 </bottom>
+                              </BorderPane>
+                           </right>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

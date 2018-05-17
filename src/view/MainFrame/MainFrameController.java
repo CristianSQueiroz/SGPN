@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import view.CadastroOS.CadastroOSController;
 import view.CadastroOS.CadastroOrdemDeServicoFXMLController;
+import view.GerenciadorDeUsuarios.GerenciadorDeUsuariosFXMLController;
 import view.propriedades.PropriedadesFXMLController;
 
 /**
@@ -33,6 +34,11 @@ public class MainFrameController {
     @FXML
     public void openConfiguracoes() throws IOException {
         Main.openWindow(PropriedadesFXMLController.class, "PropriedadesFXML.fxml");
+    }
+    
+    @FXML
+    public void openGerenciadorDeUsuarios() throws IOException {
+        Main.openWindow(GerenciadorDeUsuariosFXMLController.class, "GerenciadorDeUsuariosFXML.fxml");
     }
 
     @FXML
