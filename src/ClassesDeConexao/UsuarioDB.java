@@ -8,6 +8,7 @@ package ClassesDeConexao;
 import Core.EReader;
 import HashMap.CHashMap;
 import SQLUtil.MySqlConnect;
+import Util.Encryptador;
 import Util.UtilSql;
 import Util.Utilidades;
 import java.sql.PreparedStatement;
@@ -34,24 +35,34 @@ public class UsuarioDB {
     }
 
     public boolean cadastrarUsuario(Usuario usuario) {
-        cmd = "SELECT COUNT(*) FROM TB_USUARIO WHERE NM_USUARIO = '" + usuario.getNmUsuario() + "'";
-        retorno = connect.executaConsultaPadrao(cmd);
-        if (retorno.get(0).getValorAsInt("COUNT(*)") > 0) {
-            JOptionPane.showMessageDialog(null, "Já existe um usuário com esse nome");
-            return false;
-        }
-        String osValue = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='TB_USUARIO'";
-        retorno = connect.executaConsultaPadrao(osValue);
+        if (usuario.getId() > 0) {
+            CHashMap atributos = new CHashMap();
+            atributos.put("NM_USUARIO", usuario.getNmUsuario());
+            atributos.put("DS_SENHA", Encryptador.getEncrypted(usuario.getDsSenha()));
 
-        cmd = "INSERT INTO TB_USUARIO (ID_USUARIO,NM_USUARIO,DS_SENHA) values ("
-                + retorno.get(0).getValorAsInt("AUTO_INCREMENT") + " , "
-                + utilsql.aplicarApostofo(usuario.getNmUsuario()) + " , "
-                + utilsql.aplicarApostofo(usuario.getDsSenha()) + ")";
-        return connect.executaComandoPadrao(cmd, false);
+            CHashMap restricao = new CHashMap();
+            restricao.put("ID_USUARIO", usuario.getId());
+            return update(atributos, restricao);
+        } else {
+            cmd = "SELECT COUNT(*) FROM TB_USUARIO WHERE NM_USUARIO = '" + usuario.getNmUsuario() + "'";
+            retorno = connect.executaConsultaPadrao(cmd);
+            if (retorno.get(0).getValorAsInt("COUNT(*)") > 0) {
+                JOptionPane.showMessageDialog(null, "Já existe um usuário com esse nome");
+                return false;
+            }
+            String osValue = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='TB_USUARIO'";
+            retorno = connect.executaConsultaPadrao(osValue);
+
+            cmd = "INSERT INTO TB_USUARIO (ID_USUARIO,NM_USUARIO,DS_SENHA) values ("
+                    + retorno.get(0).getValorAsInt("AUTO_INCREMENT") + " , "
+                    + utilsql.aplicarApostofo(usuario.getNmUsuario()) + " , "
+                    + utilsql.aplicarApostofo(usuario.getDsSenha()) + ")";
+            return connect.executaComandoPadrao(cmd, false);
+        }
     }
 
     public boolean loginUsuario(Usuario usuario) {
-        cmd = "SELECT COUNT(*) FROM TB_USUARIO WHERE NM_USUARIO = '" + usuario.getNmUsuario() + "' AND DS_SENHA='" + usuario.getDsSenha() + "'";
+        cmd = "SELECT COUNT(*) FROM TB_USUARIO WHERE NM_USUARIO = '" + usuario.getNmUsuario() + "' AND DS_SENHA='" + Encryptador.getEncrypted(usuario.getDsSenha()) + "'";
         retorno = connect.executaConsultaPadrao(cmd, false);
         return (retorno.get(0).getValorAsInt("COUNT(*)") > 0);
     }
@@ -68,6 +79,11 @@ public class UsuarioDB {
 
     public boolean update(CHashMap atributos, CHashMap restricoes) {
         cmd = utilsql.montaQueryUpdate(atributos, restricoes, "TB_USUARIO");
+        return connect.executaComandoPadrao(cmd,false);
+    }
+
+    public boolean excluirRegistro(int id) {
+        cmd = "DELETE FROM TB_USUARIO WHERE ID_USUARIO = " + id;
         return connect.executaComandoPadrao(cmd);
     }
 }

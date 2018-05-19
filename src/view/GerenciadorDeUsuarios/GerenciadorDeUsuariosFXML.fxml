@@ -30,7 +30,7 @@
                                                 <Label layoutX="14.0" layoutY="38.0" text="Usuário:" />
                                                 <Label layoutX="15.0" layoutY="71.0" text="Senha:" />
                                                 <PasswordField fx:id="senhaPF" layoutX="63.0" layoutY="68.0" />
-                                                <TextField fx:id="idTF" layoutX="63.0" layoutY="10.0" />
+                                                <TextField fx:id="idTF" editable="false" layoutX="63.0" layoutY="10.0" />
                                                 <TextField fx:id="nmUsuarioTF" layoutX="63.0" layoutY="39.0" />
                                              </children>
                                           </Pane>

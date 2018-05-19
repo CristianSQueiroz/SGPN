@@ -9,6 +9,7 @@
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/model/Usuario.java</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/Main/Main.java</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/view/MainFrame/MainFrameController.java</file>
+            <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/ClassesDeConexao/UsuarioDB.java</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/view/GerenciadorDeUsuarios/GerenciadorDeUsuariosFXML.fxml</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/ClassesDeConexao/CampoDinamicoOSDB.java</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/Main/ConstrutorTela.css</file>
@@ -16,7 +17,7 @@
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/Main/ConstrutorTela.java</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/view/GerenciadorDeUsuarios/GerenciadorDeUsuariosFXMLController.java</file>
             <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/view/GerenciadorDeUsuarios/gerenciadordeusuariosfxml.css</file>
-            <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/view/CadastroOS/cadastroos.css</file>
+            <file>file:/C:/Users/Cristian/Documents/NetBeansProjects/SGPN/src/ClassesDeConexao/VendaDB.java</file>
         </group>
     </open-files>
 </project-private>
