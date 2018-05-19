@@ -133,9 +133,7 @@ public class GerenciadorDeUsuariosFXMLController implements Initializable {
                 trocarPanelBTN();
             }
             controleBotoes(true, true, false, true, true);
-
         }
-
     }
 
     public void trocarPanelBTN() {
