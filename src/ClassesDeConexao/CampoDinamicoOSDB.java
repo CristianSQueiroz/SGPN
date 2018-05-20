@@ -55,6 +55,16 @@ public class CampoDinamicoOSDB {
         });
     }
 
+    public ArrayList<String> getLabelCamposComAtributo() {
+        cmd = "SELECT a.DS_LABEL FROM CAMPO_DINAMICO_OS a WHERE a.DS_ATRIBUTO <> '' ORDER BY ID";
+        ArrayList<String> lista = new ArrayList<String>();
+        retorno = connect.executaConsultaPadrao(cmd);
+        for (int x = 0; x < retorno.size(); x++) {
+            lista.add(retorno.get(x).getValorAsString("DS_LABEL"));
+        }
+        return lista;
+    }
+
     public int getAutoIncrement(boolean lote) {
         String osValue = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='CAMPO_DINAMICO_OS'";
         if (lote) {

@@ -63,7 +63,9 @@ public class PropriedadesFXMLController implements Initializable {
     }
     
     public void carregaListas(){
-        filtrosDiponiveis.getItems().addAll("TESTE","TESTE1","TESTE2");
+        ArrayList<String> lista = new CampoDinamicoOSDB().getLabelCamposComAtributo();
+        filtrosDiponiveis.getItems().addAll(lista);
+        colunasDiponiveis.getItems().addAll(lista);
     }
 
     @FXML
