@@ -7,35 +7,56 @@ package SQLUtil;
 
 import HashMap.CHashMap;
 import com.mysql.jdbc.PreparedStatement;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class MySqlConnect {
 
     Connection conn;
+    static String driver = "com.mysql.jdbc.Driver";
 
-    String url = "cristianweb.com.br";
-    String porta = "3306";
-    String db = "crist609_SGOS";
-    String driver = "com.mysql.jdbc.Driver";
+    static String user = "crist609_connect";
+    static String pass = "connect";
 
-    String user = "crist609_connect";
-    String pass = "connect";
-
-    String urlComposto = "jdbc:mysql://" + url + ":" + porta + "/" + db;
+    static String urlComposto;
 
     private static MySqlConnect connect;
 
     public static MySqlConnect getInstance() {
         if (connect == null) {
             connect = new MySqlConnect();
+            readTxt();
         }
         return connect;
+    }
+
+    private static void readTxt() {
+        String line = null;
+        BufferedReader bufferedReader = null;
+        try {
+            FileReader fileReader = new FileReader(new File("src/SQLUtil/Config.txt"));
+            bufferedReader = new BufferedReader(fileReader);
+            while ((line = bufferedReader.readLine()) != null) {
+                String urlTxt = line.replace("serverip##", "");
+                urlComposto = "jdbc:mysql://" + urlTxt;
+                System.out.println(line);
+                break;
+            }
+            bufferedReader.close();
+
+        } catch (IOException ex) {
+            System.out.println("Error reading file Config.txt");
+        }
     }
 
     public void open() {
@@ -89,7 +110,7 @@ public class MySqlConnect {
         }
         return retorno;
     }
-    
+
     public ArrayList<CHashMap> executaConsultaPadraoLote(String cmd) {
         ArrayList<CHashMap> retorno = new ArrayList<CHashMap>();
         PreparedStatement stmt = null;
@@ -109,7 +130,7 @@ public class MySqlConnect {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
-        } 
+        }
         return retorno;
     }
 
@@ -196,30 +217,6 @@ public class MySqlConnect {
             close();
         }
         return false;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getPorta() {
-        return porta;
-    }
-
-    public void setPorta(String porta) {
-        this.porta = porta;
-    }
-
-    public String getDb() {
-        return db;
-    }
-
-    public void setDb(String db) {
-        this.db = db;
     }
 
     public String getUser() {
