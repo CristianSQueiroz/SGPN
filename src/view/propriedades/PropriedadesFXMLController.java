@@ -53,7 +53,9 @@ public class PropriedadesFXMLController implements Initializable {
     public Button removeColuna;
     public Button escolheTodosColunas;
     public Button removeTodosColunas;
-    
+
+    public ArrayList<CHashMap> camposComAtributos;
+
     /**
      * Initializes the controller class.
      */
@@ -61,11 +63,68 @@ public class PropriedadesFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         carregaListas();
     }
-    
-    public void carregaListas(){
-        ArrayList<String> lista = new CampoDinamicoOSDB().getLabelCamposComAtributo();
-        filtrosDiponiveis.getItems().addAll(lista);
-        colunasDiponiveis.getItems().addAll(lista);
+
+    public void carregaListas() {
+        camposComAtributos = new CampoDinamicoOSDB().getLabelCamposComAtributo();
+
+        filtrosDiponiveis.getItems().addAll(camposComAtributos);
+        colunasDiponiveis.getItems().addAll(camposComAtributos);
+    }
+
+    public void escolheFiltro() {
+        if (filtrosDiponiveis.getSelectionModel().getSelectedItem() != null) {
+            filtrosEscolhidos.getItems().add(filtrosDiponiveis.getSelectionModel().getSelectedItem());
+            filtrosDiponiveis.getItems().remove(filtrosDiponiveis.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void escolheTodosFiltros() {
+        filtrosDiponiveis.getItems().forEach((object) -> {
+            filtrosEscolhidos.getItems().add(object);
+        });
+        filtrosDiponiveis.getItems().removeAll(filtrosDiponiveis.getItems());
+    }
+
+    public void removeFiltro() {
+        if (filtrosEscolhidos.getSelectionModel().getSelectedItem() != null) {
+            filtrosDiponiveis.getItems().add(filtrosEscolhidos.getSelectionModel().getSelectedItem());
+            filtrosEscolhidos.getItems().remove(filtrosEscolhidos.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void removeTodosFiltros() {
+        filtrosEscolhidos.getItems().forEach((object) -> {
+            filtrosDiponiveis.getItems().add(object);
+        });
+        filtrosEscolhidos.getItems().removeAll(filtrosEscolhidos.getItems());
+    }
+
+    public void escolheColuna() {
+        if (colunasDiponiveis.getSelectionModel().getSelectedItem() != null) {
+            colunasEscolhidas.getItems().add(colunasDiponiveis.getSelectionModel().getSelectedItem());
+            colunasDiponiveis.getItems().remove(colunasDiponiveis.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void escolheTodasColunas() {
+        colunasDiponiveis.getItems().forEach((object) -> {
+            colunasEscolhidas.getItems().add(object);
+        });
+        colunasDiponiveis.getItems().removeAll(colunasDiponiveis.getItems());
+    }
+
+    public void removeColuna() {
+        if (colunasEscolhidas.getSelectionModel().getSelectedItem() != null) {
+            colunasDiponiveis.getItems().add(colunasEscolhidas.getSelectionModel().getSelectedItem());
+            colunasEscolhidas.getItems().remove(colunasEscolhidas.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void removeTodasColunas() {
+        colunasEscolhidas.getItems().forEach((object) -> {
+            colunasDiponiveis.getItems().add(object);
+        });
+        colunasEscolhidas.getItems().removeAll(colunasEscolhidas.getItems());
     }
 
     @FXML

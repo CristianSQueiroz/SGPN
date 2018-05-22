@@ -55,12 +55,15 @@ public class CampoDinamicoOSDB {
         });
     }
 
-    public ArrayList<String> getLabelCamposComAtributo() {
-        cmd = "SELECT a.DS_LABEL FROM CAMPO_DINAMICO_OS a WHERE a.DS_ATRIBUTO <> '' ORDER BY ID";
-        ArrayList<String> lista = new ArrayList<String>();
+    public ArrayList<CHashMap> getLabelCamposComAtributo() {
+        cmd = "SELECT a.ID, a.DS_LABEL FROM CAMPO_DINAMICO_OS a WHERE a.DS_ATRIBUTO <> '' ORDER BY ID";
+        ArrayList<CHashMap> lista = new ArrayList<CHashMap>();
         retorno = connect.executaConsultaPadrao(cmd);
         for (int x = 0; x < retorno.size(); x++) {
-            lista.add(retorno.get(x).getValorAsString("DS_LABEL"));
+            CHashMap cHashMap = new CHashMap();
+            cHashMap.put("ID", retorno.get(x).getValorAsInt("ID"));
+            cHashMap.put("DS_LABEL", retorno.get(x).getValorAsString("DS_LABEL"));
+            lista.add(cHashMap);
         }
         return lista;
     }
