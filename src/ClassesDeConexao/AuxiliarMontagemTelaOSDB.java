@@ -32,39 +32,72 @@ public class AuxiliarMontagemTelaOSDB {
         connect = MySqlConnect.getInstance();
     }
 
-    public void adicionarColunasEscolhidas() {
-        SwingUtilities.invokeLater(() -> {
-            AuxiliarMontagemTelaOSDB campo = new AuxiliarMontagemTelaOSDB();
+    public void adicionarFiltrosColunasEscolhidos(int id, boolean lote, String nmTabela) {
+        cmd = "INSERT INTO " + nmTabela + " VALUES(NULL," + id + ")";
+        if (lote) {
+            connect.executaComandoPadraoLote(cmd);
+        } else {
             connect.open();
-            connect.executaComandoPadraoLote("call CRIA_CAMPOS_OS_DINAMICA()");
+            connect.executaComandoPadrao(cmd);
             connect.close();
-        });
-    }
-    
-    public void adicionarFiltrosEscolhidos() {
-        SwingUtilities.invokeLater(() -> {
-            AuxiliarMontagemTelaOSDB campo = new AuxiliarMontagemTelaOSDB();
-            connect.open();
-            connect.executaComandoPadraoLote("call CRIA_CAMPOS_OS_DINAMICA()");
-            connect.close();
-        });
+        }
     }
 
-    public void removerCamposOS(ArrayList<CampoDinamico> camposRemovidos) {
-        SwingUtilities.invokeLater(() -> {
-            AuxiliarMontagemTelaOSDB campo = new AuxiliarMontagemTelaOSDB();
-            connect.open();
-            for (CampoDinamico campoDinamico : camposRemovidos) {
-                new AuxiliarMontagemTelaOSDB().deleteRegistro(campoDinamico.getId(), true);
-            };
-            connect.close();
-        });
+    public CHashMap getFiltrosColunas() {
+        CHashMap retorno = new CHashMap();
+        connect.open();
+        retorno.put("FILTROS_DISPONIVEIS", getLabelFiltrosDisponiveis(true));
+        retorno.put("FILTROS_ESCOLHIDOS", getLabelFiltrosEscolhidos(true));
+        retorno.put("COLUNAS_DISPONIVEIS", getLabelColunasDisponiveis(true));
+        retorno.put("COLUNAS_ESCOLHIDAS", getLabelColunasEscolhidas(true));
+        connect.close();
+        return retorno;
     }
 
-    public ArrayList<CHashMap> getLabelCamposComAtributo() {
-        cmd = "SELECT a.ID, a.DS_LABEL FROM CAMPO_DINAMICO_OS a WHERE a.DS_ATRIBUTO <> '' ORDER BY ID";
+    public void setFiltrosColunasAlterados(CHashMap filtrosColunas) {
+        CHashMap retorno = new CHashMap();
+        connect.open();
+        ArrayList<Integer> filtrosRemovidos = (ArrayList<Integer>) filtrosColunas.get("FILTROS_REMOVIDOS");
+        ArrayList<Integer> filtrosAdicionados = (ArrayList<Integer>) filtrosColunas.get("FILTROS_ADICIONADOS");
+        ArrayList<Integer> colunasRemovidas = (ArrayList<Integer>) filtrosColunas.get("COLUNAS_REMOVIDAS");
+        ArrayList<Integer> colunasAdicionadas = (ArrayList<Integer>) filtrosColunas.get("COLUNAS_ADICIONADAS");
+        if (filtrosRemovidos != null) {
+            for (Integer filtroID : filtrosRemovidos) {
+                deleteRegistro(filtroID, true, "TB_FILTROS_ESCOLHIDOS_OS");
+            }
+        }
+        if (colunasRemovidas != null) {
+            for (Integer colunasID : colunasRemovidas) {
+                deleteRegistro(colunasID, true, "TB_COLUNAS_ESCOLHIDAS_OS");
+            }
+        }
+        if (filtrosAdicionados != null) {
+            for (Integer filtroID : filtrosAdicionados) {
+                adicionarFiltrosColunasEscolhidos(filtroID, true, "TB_FILTROS_ESCOLHIDOS_OS");
+            }
+        }
+        if (colunasAdicionadas != null) {
+            for (Integer colunasID : colunasAdicionadas) {
+                adicionarFiltrosColunasEscolhidos(colunasID, true, "TB_COLUNAS_ESCOLHIDAS_OS");
+            }
+        }
+        connect.close();
+    }
+
+    public ArrayList<CHashMap> getLabelFiltrosDisponiveis(boolean lote) {
+        cmd = "SELECT a.ID, a.DS_LABEL "
+                + "FROM CAMPO_DINAMICO_OS a "
+                + "WHERE a.DS_ATRIBUTO <> '' "
+                + "AND (SELECT COUNT(*) "
+                + "FROM TB_FILTROS_ESCOLHIDOS_OS tfeo "
+                + "WHERE tfeo.ID_CAMPO = a.ID) = 0 "
+                + "ORDER BY ID";
         ArrayList<CHashMap> lista = new ArrayList<CHashMap>();
-        retorno = connect.executaConsultaPadrao(cmd);
+        if (lote) {
+            retorno = connect.executaConsultaPadraoLote(cmd);
+        } else {
+            retorno = connect.executaConsultaPadrao(cmd);
+        }
         for (int x = 0; x < retorno.size(); x++) {
             CHashMap cHashMap = new CHashMap();
             cHashMap.put("ID", retorno.get(x).getValorAsInt("ID"));
@@ -74,18 +107,77 @@ public class AuxiliarMontagemTelaOSDB {
         return lista;
     }
 
-    public int getAutoIncrement(boolean lote) {
-        String osValue = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='CAMPO_DINAMICO_OS'";
+    public ArrayList<CHashMap> getLabelFiltrosEscolhidos(boolean lote) {
+        cmd = "SELECT a.ID, a.DS_LABEL "
+                + "FROM CAMPO_DINAMICO_OS a "
+                + "WHERE a.DS_ATRIBUTO <> '' "
+                + "AND (SELECT COUNT(*) "
+                + "FROM TB_FILTROS_ESCOLHIDOS_OS tfeo "
+                + "WHERE tfeo.ID_CAMPO = a.ID) = 1 "
+                + "ORDER BY ID";
+        ArrayList<CHashMap> lista = new ArrayList<CHashMap>();
         if (lote) {
-            retorno = connect.executaConsultaPadraoLote(osValue);
+            retorno = connect.executaConsultaPadraoLote(cmd);
         } else {
-            retorno = connect.executaConsultaPadrao(osValue);
+            retorno = connect.executaConsultaPadrao(cmd);
         }
-        return retorno.get(0).getValorAsInt("AUTO_INCREMENT");
+        for (int x = 0; x < retorno.size(); x++) {
+            CHashMap cHashMap = new CHashMap();
+            cHashMap.put("ID", retorno.get(x).getValorAsInt("ID"));
+            cHashMap.put("DS_LABEL", retorno.get(x).getValorAsString("DS_LABEL"));
+            lista.add(cHashMap);
+        }
+        return lista;
     }
 
-    public boolean deleteRegistro(int id, boolean lote) {
-        cmd = "DELETE FROM CAMPO_DINAMICO_OS WHERE ID=" + id;
+    public ArrayList<CHashMap> getLabelColunasDisponiveis(boolean lote) {
+        cmd = "SELECT a.ID, a.DS_LABEL "
+                + "FROM CAMPO_DINAMICO_OS a "
+                + "WHERE a.DS_ATRIBUTO <> '' "
+                + "AND (SELECT COUNT(*) "
+                + "FROM TB_COLUNAS_ESCOLHIDAS_OS tceo "
+                + "WHERE tceo.ID_CAMPO = a.ID) = 0 "
+                + "ORDER BY ID";
+        ArrayList<CHashMap> lista = new ArrayList<CHashMap>();
+        if (lote) {
+            retorno = connect.executaConsultaPadraoLote(cmd);
+        } else {
+            retorno = connect.executaConsultaPadrao(cmd);
+        }
+        for (int x = 0; x < retorno.size(); x++) {
+            CHashMap cHashMap = new CHashMap();
+            cHashMap.put("ID", retorno.get(x).getValorAsInt("ID"));
+            cHashMap.put("DS_LABEL", retorno.get(x).getValorAsString("DS_LABEL"));
+            lista.add(cHashMap);
+        }
+        return lista;
+    }
+
+    public ArrayList<CHashMap> getLabelColunasEscolhidas(boolean lote) {
+        cmd = "SELECT a.ID, a.DS_LABEL "
+                + "FROM CAMPO_DINAMICO_OS a "
+                + "WHERE a.DS_ATRIBUTO <> '' "
+                + "AND (SELECT COUNT(*) "
+                + "FROM TB_COLUNAS_ESCOLHIDAS_OS tceo "
+                + "WHERE tceo.ID_CAMPO = a.ID) = 1 "
+                + "ORDER BY ID";
+        ArrayList<CHashMap> lista = new ArrayList<CHashMap>();
+        if (lote) {
+            retorno = connect.executaConsultaPadraoLote(cmd);
+        } else {
+            retorno = connect.executaConsultaPadrao(cmd);
+        }
+        for (int x = 0; x < retorno.size(); x++) {
+            CHashMap cHashMap = new CHashMap();
+            cHashMap.put("ID", retorno.get(x).getValorAsInt("ID"));
+            cHashMap.put("DS_LABEL", retorno.get(x).getValorAsString("DS_LABEL"));
+            lista.add(cHashMap);
+        }
+        return lista;
+    }
+
+    public boolean deleteRegistro(int id, boolean lote, String nmTabela) {
+        cmd = "DELETE FROM " + nmTabela + " WHERE ID_CAMPO=" + id;
         if (lote) {
             return connect.executaComandoPadraoLote(cmd);
         } else {
@@ -101,5 +193,13 @@ public class AuxiliarMontagemTelaOSDB {
         } else {
             return connect.executaComandoPadrao(cmd);
         }
+    }
+
+    public void openConnection() {
+        connect.open();
+    }
+
+    public void closeConnection() {
+        connect.close();
     }
 }

@@ -5,6 +5,7 @@
  */
 package view.propriedades;
 
+import ClassesDeConexao.AuxiliarMontagemTelaOSDB;
 import ClassesDeConexao.CampoDinamicoOSDB;
 import HashMap.CHashMap;
 import Main.ConstrutorTela;
@@ -55,6 +56,7 @@ public class PropriedadesFXMLController implements Initializable {
     public Button removeTodosColunas;
 
     public ArrayList<CHashMap> camposComAtributos;
+    public CHashMap dados;
 
     /**
      * Initializes the controller class.
@@ -65,10 +67,33 @@ public class PropriedadesFXMLController implements Initializable {
     }
 
     public void carregaListas() {
-        camposComAtributos = new CampoDinamicoOSDB().getLabelCamposComAtributo();
+        dados = new AuxiliarMontagemTelaOSDB().getFiltrosColunas();
+        for (Object object : dados.keySet()) {
+            switch (object.toString()) {
+                case "FILTROS_DISPONIVEIS": {
+                    preencheLista(filtrosDiponiveis, (ArrayList<CHashMap>) dados.get(object));
+                    break;
+                }
+                case "FILTROS_ESCOLHIDOS": {
+                    preencheLista(filtrosEscolhidos, (ArrayList<CHashMap>) dados.get(object));
+                    break;
+                }
+                case "COLUNAS_DISPONIVEIS": {
+                    preencheLista(colunasDiponiveis, (ArrayList<CHashMap>) dados.get(object));
+                    break;
+                }
+                case "COLUNAS_ESCOLHIDAS": {
+                    preencheLista(colunasEscolhidas, (ArrayList<CHashMap>) dados.get(object));
+                    break;
+                }
+            }
+        }
+    }
 
-        filtrosDiponiveis.getItems().addAll(camposComAtributos);
-        colunasDiponiveis.getItems().addAll(camposComAtributos);
+    public void preencheLista(ListView lista, ArrayList<CHashMap> valores) {
+        valores.forEach((cHashMap) -> {
+            lista.getItems().add(cHashMap);
+        });
     }
 
     public void escolheFiltro() {
@@ -127,6 +152,91 @@ public class PropriedadesFXMLController implements Initializable {
         colunasEscolhidas.getItems().removeAll(colunasEscolhidas.getItems());
     }
 
+    public void getCamposAlterados() {
+        ArrayList<Integer> filtrosEscolhidosRemovidos = new ArrayList<Integer>();
+        ArrayList<Integer> filtrosEscolhidosAdicionados = new ArrayList<Integer>();
+        ArrayList<Integer> colunasEscolhidasRemovidas = new ArrayList<Integer>();
+        ArrayList<Integer> colunasEscolhidasAdicionadas = new ArrayList<Integer>();
+
+        ArrayList<CHashMap> filtrosEscolhidosAL = (ArrayList<CHashMap>) dados.get("FILTROS_ESCOLHIDOS");
+        ArrayList<CHashMap> colunasEscolhidasAL = (ArrayList<CHashMap>) dados.get("COLUNAS_ESCOLHIDAS");
+
+        for (CHashMap cHM : filtrosEscolhidosAL) {
+            int id = cHM.getValorAsInt("ID");
+            boolean encontrou = false;
+            for (Object object : this.filtrosEscolhidos.getItems()) {
+                CHashMap cHM2 = (CHashMap) object;
+                if (id == cHM2.getValorAsInt("ID")) {
+                    encontrou = true;
+                    break;
+                }
+            }
+            if (!encontrou) {
+                filtrosEscolhidosRemovidos.add(id);
+            }
+        }
+
+        for (Object object : this.filtrosEscolhidos.getItems()) {
+            CHashMap cHM2 = (CHashMap) object;
+            int id = cHM2.getValorAsInt("ID");
+            boolean encontrou = false;
+
+            for (CHashMap cHM : filtrosEscolhidosAL) {
+                if (id == cHM.getValorAsInt("ID")) {
+                    encontrou = true;
+                    break;
+                }
+
+            }
+            if (!encontrou) {
+                filtrosEscolhidosAdicionados.add(id);
+            }
+        }
+
+        //Colunas
+        for (CHashMap cHM : colunasEscolhidasAL) {
+            int id = cHM.getValorAsInt("ID");
+            boolean encontrou = false;
+            for (Object object : this.colunasEscolhidas.getItems()) {
+                CHashMap cHM2 = (CHashMap) object;
+                if (id == cHM2.getValorAsInt("ID")) {
+                    encontrou = true;
+                    break;
+                }
+            }
+            if (!encontrou) {
+                colunasEscolhidasRemovidas.add(id);
+            }
+        }
+
+        for (Object object : this.colunasEscolhidas.getItems()) {
+            CHashMap cHM2 = (CHashMap) object;
+            int id = cHM2.getValorAsInt("ID");
+            boolean encontrou = false;
+
+            for (CHashMap cHM : colunasEscolhidasAL) {
+                if (id == cHM.getValorAsInt("ID")) {
+                    encontrou = true;
+                    break;
+                }
+
+            }
+            if (!encontrou) {
+                colunasEscolhidasAdicionadas.add(id);
+            }
+        }
+        CHashMap alterados = new CHashMap();
+        alterados.put("FILTROS_REMOVIDOS", filtrosEscolhidosRemovidos);
+        alterados.put("FILTROS_ADICIONADOS", filtrosEscolhidosAdicionados);
+        alterados.put("COLUNAS_REMOVIDAS", colunasEscolhidasRemovidas);
+        alterados.put("COLUNAS_ADICIONADAS", colunasEscolhidasAdicionadas);
+        new AuxiliarMontagemTelaOSDB().setFiltrosColunasAlterados(alterados);
+        //System.out.println("Filtros Removidos" + filtrosEscolhidosRemovidos);;
+        //System.out.println("Filtros Adicionados" + filtrosEscolhidosAdicionados);
+        //System.out.println("Colunas Removidas" + colunasEscolhidasRemovidas);
+        //System.out.println("Colunas Adicionadas" + colunasEscolhidasAdicionadas);
+    }
+
     @FXML
     public void exitApplication(ActionEvent event) {
         Platform.exit();
@@ -136,4 +246,5 @@ public class PropriedadesFXMLController implements Initializable {
     public void stop(ActionEvent event) {
         System.out.println("Stage is closing");
     }
+
 }
