@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import view.CadastroOS.CadastroOSController;
 import view.CadastroOS.CadastroOrdemDeServicoFXMLController;
+import view.GerenciadorDeOS.GerenciadorDeOSFXMLController;
 import view.GerenciadorDeUsuarios.GerenciadorDeUsuariosFXMLController;
 import view.propriedades.PropriedadesFXMLController;
 
@@ -30,21 +31,25 @@ public class MainFrameController {
     public void openEditorDeCampos() throws IOException {
         Main.openWindowEditorDeCampos();
     }
-    
+
     @FXML
     public void openConfiguracoes() throws IOException {
         Main.openWindow(PropriedadesFXMLController.class, "PropriedadesFXML.fxml");
     }
-    
+
     @FXML
     public void openGerenciadorDeUsuarios() throws IOException {
         Main.openWindow(GerenciadorDeUsuariosFXMLController.class, "GerenciadorDeUsuariosFXML.fxml");
     }
 
     @FXML
+    public void openGerenciadorDeOS() throws IOException {
+        Main.openWindow(GerenciadorDeOSFXMLController.class, "GerenciadorDeOSFXML.fxml");
+    }
+
+    @FXML
     public void openCadastroOS() throws IOException {
         Main.openWindow(CadastroOSController.class, "CadastroOS.fxml");
-        //CadastroOrdemDeServicoFXMLController.montaTelaCadastro();
     }
 
     @FXML

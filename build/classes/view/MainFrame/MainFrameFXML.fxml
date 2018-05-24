@@ -31,6 +31,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#openCadastroOS" text="Cadastro de OS" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#openGerenciadorDeUsuarios" text="Gestão de usuários" />
+                  <MenuItem mnemonicParsing="false" onAction="#openGerenciadorDeOS" text="Gestão de Ordens de Serviços" />
                         <MenuItem mnemonicParsing="false" text="Gestão de produtos" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Controle de estoque" />

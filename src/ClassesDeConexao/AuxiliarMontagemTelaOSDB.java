@@ -175,6 +175,29 @@ public class AuxiliarMontagemTelaOSDB {
         }
         return lista;
     }
+    
+    public ArrayList<CHashMap> getColunasTableView(boolean lote) {
+        cmd = "SELECT a.DS_LABEL,a.DS_ATRIBUTO "
+                + "FROM CAMPO_DINAMICO_OS a "
+                + "WHERE a.DS_ATRIBUTO <> '' "
+                + "AND (SELECT COUNT(*) "
+                + "FROM TB_COLUNAS_ESCOLHIDAS_OS tceo "
+                + "WHERE tceo.ID_CAMPO = a.ID) = 1 "
+                + "ORDER BY ID";
+        ArrayList<CHashMap> lista = new ArrayList<CHashMap>();
+        if (lote) {
+            retorno = connect.executaConsultaPadraoLote(cmd);
+        } else {
+            retorno = connect.executaConsultaPadrao(cmd);
+        }
+        for (int x = 0; x < retorno.size(); x++) {
+            CHashMap cHashMap = new CHashMap();
+            cHashMap.put("DS_LABEL", retorno.get(x).getValorAsString("DS_LABEL"));
+            cHashMap.put("DS_ATRIBUTO", retorno.get(x).getValorAsString("DS_ATRIBUTO"));
+            lista.add(cHashMap);
+        }
+        return lista;
+    }
 
     public boolean deleteRegistro(int id, boolean lote, String nmTabela) {
         cmd = "DELETE FROM " + nmTabela + " WHERE ID_CAMPO=" + id;
