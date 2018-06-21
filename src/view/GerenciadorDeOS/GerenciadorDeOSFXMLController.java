@@ -58,7 +58,8 @@ public class GerenciadorDeOSFXMLController implements Initializable {
         for (CHashMap cHM : vinculoColunas) {
             atributos.put(cHM.getValorAsString("DS_ATRIBUTO"), null);
         }
-        ArrayList<CHashMap> dados = new OrdemDeServicoDB().getOrdensDeServicos(atributos, "ID");
+        ArrayList<CHashMap> dados = new OrdemDeServicoDB().getOrdensDeServicos(atributos, "NR_ID_PADRAO");      
         
+        //Preencher dados em colunas dinamicas
     }
 }

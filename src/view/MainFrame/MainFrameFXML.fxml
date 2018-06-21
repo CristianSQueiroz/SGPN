@@ -26,15 +26,15 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Funções">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Cadastro de usuários" />
-                        <MenuItem mnemonicParsing="false" text="Cadastro de produtos" />
+                        <MenuItem mnemonicParsing="false" text="Cadastro de usuários" visible="false" />
+                        <MenuItem mnemonicParsing="false" text="Cadastro de produtos" visible="false" />
                         <MenuItem mnemonicParsing="false" onAction="#openCadastroOS" text="Cadastro de OS" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#openGerenciadorDeUsuarios" text="Gestão de usuários" />
                   <MenuItem mnemonicParsing="false" onAction="#openGerenciadorDeOS" text="Gestão de Ordens de Serviços" />
-                        <MenuItem mnemonicParsing="false" text="Gestão de produtos" />
+                        <MenuItem mnemonicParsing="false" text="Gestão de produtos" visible="false" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Controle de estoque" />
+                        <MenuItem mnemonicParsing="false" text="Controle de estoque" visible="false" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Ajuda">
