@@ -13,5 +13,6 @@ public class ColunaGerenciadorOS {
     
     public String nmColuna;
     public String dsAtributo;
+    public String gabriel;
     
 }
